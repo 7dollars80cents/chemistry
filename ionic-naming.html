@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ionic Compound Naming - Step by Step</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-hover: #22222e;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --accent-red: #ef4444;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2a2a3a;
+            --positive: #22c55e;
+            --negative: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            z-index: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .step-indicator.completed {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            width: 80px;
+            margin-left: -20px;
+        }
+
+        .step-label:first-child {
+            margin-left: 0;
+        }
+
+        /* Section Styles */
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-cyan);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .info-box.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .info-box h4 {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box.warning h4 {
+            color: var(--accent-orange);
+        }
+
+        /* Ion Table */
+        .ion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ion-table th, .ion-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ion-table th {
+            background: var(--bg-secondary);
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .ion-table tr:hover {
+            background: var(--bg-hover);
+        }
+
+        .charge-positive {
+            color: var(--accent-pink);
+        }
+
+        .charge-negative {
+            color: var(--accent-cyan);
+        }
+
+        /* Drag and Drop */
+        .drag-drop-area {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .drag-items {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .drop-zones {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .draggable {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            cursor: grab;
+            transition: all 0.2s ease;
+            font-family: 'JetBrains Mono', monospace;
+            user-select: none;
+        }
+
+        .draggable:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .draggable.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .draggable.placed {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .drop-zone {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            min-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .drop-zone .ion-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .drop-zone .dropped-item {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+        }
+
+        .drop-zone .dropped-item:hover {
+            background: var(--accent-red);
+        }
+
+        .drop-zone.correct {
+            border-color: var(--positive);
+            border-style: solid;
+        }
+
+        .drop-zone.incorrect {
+            border-color: var(--negative);
+            border-style: solid;
+        }
+
+        /* Formula Builder */
+        .formula-builder {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .formula-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .formula-display sub {
+            font-size: 1.2rem;
+            vertical-align: sub;
+        }
+
+        .ion-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .ion-selector select {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .ion-selector select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .number-inputs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .number-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .number-input-group label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .number-input-group input {
+            width: 60px;
+            padding: 0.5rem;
+            text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+        }
+
+        .number-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        /* Practice Questions */
+        .question-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .answer-input.correct {
+            border-color: var(--positive);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .answer-input.incorrect {
+            border-color: var(--negative);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .feedback {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--positive);
+        }
+
+        .feedback.incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--negative);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+        }
+
+        .btn-success {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Quiz Results */
+        .quiz-results {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-green) var(--score-percent), var(--bg-secondary) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-text {
+            position: relative;
+            z-index: 1;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Criss-cross visual */
+        .criss-cross-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .ion-box {
+            text-align: center;
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+        }
+
+        .ion-symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .ion-charge {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .arrow-cross {
+            font-size: 3rem;
+            color: var(--accent-orange);
+        }
+
+        .result-formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            color: var(--accent-green);
+            padding: 1rem 2rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .drag-drop-area {
+                flex-direction: column;
+            }
+
+            .step-label {
+                font-size: 0.65rem;
+                width: 60px;
+            }
+
+            .criss-cross-demo {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Transition metal selector */
+        .transition-metal-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .roman-numeral {
+            color: var(--accent-orange);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 Ionic Compound Naming</h1>
+            <p class="subtitle">Master naming step by step</p>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="step-indicator active" data-step="1">1</div>
+                <div class="step-indicator" data-step="2">2</div>
+                <div class="step-indicator" data-step="3">3</div>
+                <div class="step-indicator" data-step="4">4</div>
+                <div class="step-indicator" data-step="5">5</div>
+            </div>
+            <div class="step-labels">
+                <span class="step-label">Learn Ions</span>
+                <span class="step-label">Match Charges</span>
+                <span class="step-label">Build Formulas</span>
+                <span class="step-label">Name Practice</span>
+                <span class="step-label">Final Quiz</span>
+            </div>
+        </div>
+
+        <!-- SECTION 1: Learn the Ions -->
+        <section class="section active" id="section1">
+            <div class="section-card">
+                <h2>Step 1: Know Your Ions</h2>
+                <p>Before you can name ionic compounds, you need to know the common ions and their charges. Study these tables carefully!</p>
+
+                <h3>Common Positive Ions (Cations)</h3>
+                <table class="ion-table">
+                    <thead>
+                        <tr>
+                            <th>Ion Name</th>
+                            <th>Symbol</th>
+                            <th>Charge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Sodium</td><td>Na</td><td class="charge-positive">+1</td></tr>
+                        <tr><td>Potassium</td><td>K</td><td class="charge-positive">+1</td></tr>
+                        <tr><td>Lithium</td><td>Li</td><td class="charge-positive">+1</td></tr>
+                        <tr><td>Silver</td><td>Ag</td><td class="charge-positive">+1</td></tr>
+                        <tr><td>Magnesium</td><td>Mg</td><td class="charge-positive">+2</td></tr>
+                        <tr><td>Calcium</td><td>Ca</td><td class="charge-positive">+2</td></tr>
+                        <tr><td>Barium</td><td>Ba</td><td class="charge-positive">+2</td></tr>
+                        <tr><td>Zinc</td><td>Zn</td><td class="charge-positive">+2</td></tr>
+                        <tr><td>Aluminium</td><td>Al</td><td class="charge-positive">+3</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="transition-metal-section">
+                    <h3>Transition Metals (Variable Charge) ⚠️</h3>
+                    <p>These metals can have different charges. We use Roman numerals in the name to show which charge!</p>
+                    <table class="ion-table">
+                        <thead>
+                            <tr>
+                                <th>Ion Name</th>
+                                <th>Symbol</th>
+                                <th>Possible Charges</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Iron(II) / Iron(III)</td><td>Fe</td><td class="charge-positive">+2 or +3</td></tr>
+                            <tr><td>Copper(I) / Copper(II)</td><td>Cu</td><td class="charge-positive">+1 or +2</td></tr>
+                            <tr><td>Lead(II) / Lead(IV)</td><td>Pb</td><td class="charge-positive">+2 or +4</td></tr>
+                            <tr><td>Manganese(II) / (IV) / (VII)</td><td>Mn</td><td class="charge-positive">+2, +4, or +7</td></tr>
+                            <tr><td>Chromium(II) / Chromium(III)</td><td>Cr</td><td class="charge-positive">+2 or +3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Common Negative Ions (Anions)</h3>
+                <table class="ion-table">
+                    <thead>
+                        <tr>
+                            <th>Ion Name</th>
+                            <th>Symbol</th>
+                            <th>Charge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Chloride</td><td>Cl</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Bromide</td><td>Br</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Iodide</td><td>I</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Fluoride</td><td>F</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Oxide</td><td>O</td><td class="charge-negative">−2</td></tr>
+                        <tr><td>Sulfide</td><td>S</td><td class="charge-negative">−2</td></tr>
+                        <tr><td>Nitride</td><td>N</td><td class="charge-negative">−3</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 2rem;">Polyatomic Ions (Groups of Atoms)</h3>
+                <table class="ion-table">
+                    <thead>
+                        <tr>
+                            <th>Ion Name</th>
+                            <th>Formula</th>
+                            <th>Charge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Hydroxide</td><td>OH</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Nitrate</td><td>NO₃</td><td class="charge-negative">−1</td></tr>
+                        <tr><td>Carbonate</td><td>CO₃</td><td class="charge-negative">−2</td></tr>
+                        <tr><td>Sulfate</td><td>SO₄</td><td class="charge-negative">−2</td></tr>
+                        <tr><td>Phosphate</td><td>PO₄</td><td class="charge-negative">−3</td></tr>
+                        <tr><td>Ammonium</td><td>NH₄</td><td class="charge-positive">+1</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <h4>💡 Key Rules for Naming</h4>
+                    <p style="margin-bottom: 0;">
+                        • Metal name comes first (stays the same)<br>
+                        • Non-metal name changes ending to <strong>-ide</strong><br>
+                        • Polyatomic ions keep their name (sulfate, nitrate, etc.)<br>
+                        • Transition metals need Roman numerals: Iron(II) chloride
+                    </p>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <div></div>
+                <button class="btn btn-primary" onclick="goToSection(2)">Next: Practice Matching →</button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Drag and Drop Matching -->
+        <section class="section" id="section2">
+            <div class="section-card">
+                <h2>Step 2: Match Ions to Their Charges</h2>
+                <p>Drag each charge to the correct ion. Click on a placed item to remove it.</p>
+
+                <div class="drag-drop-area">
+                    <div class="drag-items">
+                        <h3>Charges</h3>
+                        <div class="draggable" draggable="true" data-charge="+1">+1</div>
+                        <div class="draggable" draggable="true" data-charge="+2">+2</div>
+                        <div class="draggable" draggable="true" data-charge="+3">+3</div>
+                        <div class="draggable" draggable="true" data-charge="-1">−1</div>
+                        <div class="draggable" draggable="true" data-charge="-2">−2</div>
+                        <div class="draggable" draggable="true" data-charge="-2">−2</div>
+                    </div>
+                    <div class="drop-zones">
+                        <h3>Ions</h3>
+                        <div class="drop-zone" data-answer="-2">
+                            <span class="ion-name">O (Oxide)</span>
+                        </div>
+                        <div class="drop-zone" data-answer="+3">
+                            <span class="ion-name">Al (Aluminium)</span>
+                        </div>
+                        <div class="drop-zone" data-answer="-1">
+                            <span class="ion-name">Cl (Chloride)</span>
+                        </div>
+                        <div class="drop-zone" data-answer="+1">
+                            <span class="ion-name">Na (Sodium)</span>
+                        </div>
+                        <div class="drop-zone" data-answer="-2">
+                            <span class="ion-name">SO₄ (Sulfate)</span>
+                        </div>
+                        <div class="drop-zone" data-answer="+2">
+                            <span class="ion-name">Ca (Calcium)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="resetDragDrop()">Reset</button>
+                    <button class="btn btn-success" onclick="checkDragDrop()">Check Answers</button>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToSection(1)">← Back</button>
+                <button class="btn btn-primary" onclick="goToSection(3)">Next: Build Formulas →</button>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Formula Building -->
+        <section class="section" id="section3">
+            <div class="section-card">
+                <h2>Step 3: Build Ionic Formulas</h2>
+                <p>Use the criss-cross method: the charge number of one ion becomes the subscript of the other!</p>
+
+                <div class="criss-cross-demo">
+                    <div class="ion-box">
+                        <div class="ion-symbol">Al</div>
+                        <div class="ion-charge charge-positive">+3</div>
+                    </div>
+                    <div class="arrow-cross">⇄</div>
+                    <div class="ion-box">
+                        <div class="ion-symbol">O</div>
+                        <div class="ion-charge charge-negative">−2</div>
+                    </div>
+                    <div style="font-size: 2rem; color: var(--text-muted);">=</div>
+                    <div class="result-formula">Al₂O₃</div>
+                </div>
+
+                <div class="info-box">
+                    <h4>🔄 The Criss-Cross Method</h4>
+                    <p style="margin-bottom: 0;">
+                        1. Write the symbols of both ions<br>
+                        2. Take the charge number from each ion (ignore + or −)<br>
+                        3. Criss-cross: the number goes to the OTHER ion as a subscript<br>
+                        4. Simplify if possible (e.g., Ca₂O₂ → CaO)
+                    </p>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Practice Building Formulas</h3>
+                
+                <div class="formula-builder" id="builder1">
+                    <p><strong>Build the formula for: Calcium Chloride</strong></p>
+                    <div class="ion-selector">
+                        <select id="cation1">
+                            <option value="">Select cation...</option>
+                            <option value="Na+1">Na⁺ (Sodium)</option>
+                            <option value="Ca+2">Ca²⁺ (Calcium)</option>
+                            <option value="Al+3">Al³⁺ (Aluminium)</option>
+                            <option value="Fe+2">Fe²⁺ (Iron II)</option>
+                            <option value="Fe+3">Fe³⁺ (Iron III)</option>
+                        </select>
+                        <select id="anion1">
+                            <option value="">Select anion...</option>
+                            <option value="Cl-1">Cl⁻ (Chloride)</option>
+                            <option value="O-2">O²⁻ (Oxide)</option>
+                            <option value="SO4-2">SO₄²⁻ (Sulfate)</option>
+                            <option value="NO3-1">NO₃⁻ (Nitrate)</option>
+                        </select>
+                    </div>
+                    <div class="number-inputs">
+                        <div class="number-input-group">
+                            <label>Cation subscript</label>
+                            <input type="number" id="cationNum1" min="1" max="9" value="1">
+                        </div>
+                        <div class="number-input-group">
+                            <label>Anion subscript</label>
+                            <input type="number" id="anionNum1" min="1" max="9" value="1">
+                        </div>
+                    </div>
+                    <div class="formula-display" id="display1">Select ions above</div>
+                    <button class="btn btn-success" onclick="checkFormula(1, 'CaCl2')">Check Formula</button>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <div class="formula-builder" id="builder2">
+                    <p><strong>Build the formula for: Aluminium Oxide</strong></p>
+                    <div class="ion-selector">
+                        <select id="cation2">
+                            <option value="">Select cation...</option>
+                            <option value="Na+1">Na⁺ (Sodium)</option>
+                            <option value="Ca+2">Ca²⁺ (Calcium)</option>
+                            <option value="Al+3">Al³⁺ (Aluminium)</option>
+                            <option value="Mg+2">Mg²⁺ (Magnesium)</option>
+                        </select>
+                        <select id="anion2">
+                            <option value="">Select anion...</option>
+                            <option value="Cl-1">Cl⁻ (Chloride)</option>
+                            <option value="O-2">O²⁻ (Oxide)</option>
+                            <option value="S-2">S²⁻ (Sulfide)</option>
+                            <option value="N-3">N³⁻ (Nitride)</option>
+                        </select>
+                    </div>
+                    <div class="number-inputs">
+                        <div class="number-input-group">
+                            <label>Cation subscript</label>
+                            <input type="number" id="cationNum2" min="1" max="9" value="1">
+                        </div>
+                        <div class="number-input-group">
+                            <label>Anion subscript</label>
+                            <input type="number" id="anionNum2" min="1" max="9" value="1">
+                        </div>
+                    </div>
+                    <div class="formula-display" id="display2">Select ions above</div>
+                    <button class="btn btn-success" onclick="checkFormula(2, 'Al2O3')">Check Formula</button>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <div class="formula-builder" id="builder3">
+                    <p><strong>Build the formula for: Iron(III) Sulfate</strong></p>
+                    <div class="ion-selector">
+                        <select id="cation3">
+                            <option value="">Select cation...</option>
+                            <option value="Fe+2">Fe²⁺ (Iron II)</option>
+                            <option value="Fe+3">Fe³⁺ (Iron III)</option>
+                            <option value="Cu+1">Cu⁺ (Copper I)</option>
+                            <option value="Cu+2">Cu²⁺ (Copper II)</option>
+                        </select>
+                        <select id="anion3">
+                            <option value="">Select anion...</option>
+                            <option value="SO4-2">SO₄²⁻ (Sulfate)</option>
+                            <option value="NO3-1">NO₃⁻ (Nitrate)</option>
+                            <option value="CO3-2">CO₃²⁻ (Carbonate)</option>
+                            <option value="OH-1">OH⁻ (Hydroxide)</option>
+                        </select>
+                    </div>
+                    <div class="number-inputs">
+                        <div class="number-input-group">
+                            <label>Cation subscript</label>
+                            <input type="number" id="cationNum3" min="1" max="9" value="1">
+                        </div>
+                        <div class="number-input-group">
+                            <label>Anion subscript</label>
+                            <input type="number" id="anionNum3" min="1" max="9" value="1">
+                        </div>
+                    </div>
+                    <div class="formula-display" id="display3">Select ions above</div>
+                    <button class="btn btn-success" onclick="checkFormula(3, 'Fe2(SO4)3')">Check Formula</button>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToSection(2)">← Back</button>
+                <button class="btn btn-primary" onclick="goToSection(4)">Next: Naming Practice →</button>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Naming Practice -->
+        <section class="section" id="section4">
+            <div class="section-card">
+                <h2>Step 4: Practice Naming</h2>
+                <p>Given the formula, write the correct name. Remember the rules!</p>
+
+                <div class="info-box warning">
+                    <h4>⚠️ Remember for Transition Metals</h4>
+                    <p style="margin-bottom: 0;">Use Roman numerals to show the charge: Iron(II), Copper(I), etc.</p>
+                </div>
+
+                <!-- Formula to Name -->
+                <h3>Write the Name</h3>
+                
+                <div class="question-card">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">NaCl</div>
+                    <input type="text" class="answer-input" id="name1" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name1', ['sodium chloride'])">Check</button>
+                    <div class="feedback" id="feedback-name1"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">MgO</div>
+                    <input type="text" class="answer-input" id="name2" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name2', ['magnesium oxide'])">Check</button>
+                    <div class="feedback" id="feedback-name2"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">Al₂O₃</div>
+                    <input type="text" class="answer-input" id="name3" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name3', ['aluminium oxide', 'aluminum oxide'])">Check</button>
+                    <div class="feedback" id="feedback-name3"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">FeCl₂</div>
+                    <input type="text" class="answer-input" id="name4" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name4', ['iron(ii) chloride', 'iron (ii) chloride', 'iron(2) chloride'])">Check</button>
+                    <div class="feedback" id="feedback-name4"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 5</div>
+                    <div class="question-text">CuSO₄</div>
+                    <input type="text" class="answer-input" id="name5" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name5', ['copper(ii) sulfate', 'copper (ii) sulfate', 'copper(ii) sulphate', 'copper (ii) sulphate', 'copper(2) sulfate', 'copper(2) sulphate'])">Check</button>
+                    <div class="feedback" id="feedback-name5"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 6</div>
+                    <div class="question-text">Ca(NO₃)₂</div>
+                    <input type="text" class="answer-input" id="name6" placeholder="Type the name...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('name6', ['calcium nitrate'])">Check</button>
+                    <div class="feedback" id="feedback-name6"></div>
+                </div>
+
+                <!-- Name to Formula -->
+                <h3 style="margin-top: 2rem;">Write the Formula</h3>
+
+                <div class="question-card">
+                    <div class="question-number">Question 7</div>
+                    <div class="question-text">Potassium bromide</div>
+                    <input type="text" class="answer-input" id="formula1" placeholder="Type the formula...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('formula1', ['kbr'])">Check</button>
+                    <div class="feedback" id="feedback-formula1"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 8</div>
+                    <div class="question-text">Calcium carbonate</div>
+                    <input type="text" class="answer-input" id="formula2" placeholder="Type the formula...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('formula2', ['caco3'])">Check</button>
+                    <div class="feedback" id="feedback-formula2"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 9</div>
+                    <div class="question-text">Iron(III) oxide</div>
+                    <input type="text" class="answer-input" id="formula3" placeholder="Type the formula...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('formula3', ['fe2o3'])">Check</button>
+                    <div class="feedback" id="feedback-formula3"></div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">Question 10</div>
+                    <div class="question-text">Ammonium sulfate</div>
+                    <input type="text" class="answer-input" id="formula4" placeholder="Type the formula...">
+                    <button class="btn btn-success" style="margin-top: 0.75rem;" onclick="checkNaming('formula4', ['(nh4)2so4', 'nh4)2so4', '(nh4)2(so4)'])">Check</button>
+                    <div class="feedback" id="feedback-formula4"></div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToSection(3)">← Back</button>
+                <button class="btn btn-primary" onclick="goToSection(5)">Next: Final Quiz →</button>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Final Quiz -->
+        <section class="section" id="section5">
+            <div class="section-card">
+                <h2>Step 5: Final Quiz</h2>
+                <p>Test your knowledge! Answer all questions, then submit to see your score.</p>
+
+                <div id="quizQuestions">
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 1</div>
+                        <div class="question-text">What is the charge of a sulfate ion (SO₄)?</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz1" placeholder="e.g., -2 or 2-">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 2</div>
+                        <div class="question-text">Name this compound: FeCl₃</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz2" placeholder="Type the name...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 3</div>
+                        <div class="question-text">Write the formula for: Magnesium hydroxide</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz3" placeholder="Type the formula...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 4</div>
+                        <div class="question-text">Name this compound: K₂SO₄</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz4" placeholder="Type the name...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 5</div>
+                        <div class="question-text">Write the formula for: Copper(II) nitrate</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz5" placeholder="Type the formula...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 6</div>
+                        <div class="question-text">What is the charge of an aluminium ion?</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz6" placeholder="e.g., +3 or 3+">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 7</div>
+                        <div class="question-text">Name this compound: PbO₂</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz7" placeholder="Type the name...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 8</div>
+                        <div class="question-text">Write the formula for: Sodium phosphate</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz8" placeholder="Type the formula...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 9</div>
+                        <div class="question-text">Name this compound: NH₄Cl</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz9" placeholder="Type the name...">
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">Quiz Question 10</div>
+                        <div class="question-text">Write the formula for: Barium sulfate</div>
+                        <input type="text" class="answer-input quiz-answer" id="quiz10" placeholder="Type the formula...">
+                    </div>
+                </div>
+
+                <div class="button-group" style="justify-content: center;">
+                    <button class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;" onclick="submitQuiz()">Submit Quiz</button>
+                </div>
+
+                <div id="quizResults" class="quiz-results" style="display: none;">
+                    <h2>Your Results</h2>
+                    <div class="score-circle" style="--score-percent: 0%;">
+                        <span class="score-text" id="scoreText">0/10</span>
+                    </div>
+                    <p id="scoreMessage" style="font-size: 1.2rem;"></p>
+                    <div class="button-group" style="justify-content: center; margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="resetQuiz()">Try Again</button>
+                        <button class="btn btn-primary" onclick="goToSection(1)">Review Material</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goToSection(4)">← Back to Practice</button>
+                <div></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation
+        function goToSection(num) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section' + num).classList.add('active');
+            
+            document.querySelectorAll('.step-indicator').forEach((step, index) => {
+                step.classList.remove('active');
+                if (index + 1 < num) step.classList.add('completed');
+                if (index + 1 === num) step.classList.add('active');
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Drag and Drop
+        let draggedItem = null;
+
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                if (this.classList.contains('placed')) {
+                    e.preventDefault();
+                    return;
+                }
+                draggedItem = this;
+                this.classList.add('dragging');
+            });
+            
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                draggedItem = null;
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('drag-over');
+            });
+            
+            zone.addEventListener('dragleave', function() {
+                this.classList.remove('drag-over');
+            });
+            
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('drag-over');
+                
+                if (draggedItem && !this.querySelector('.dropped-item')) {
+                    const droppedEl = document.createElement('span');
+                    droppedEl.className = 'dropped-item';
+                    droppedEl.textContent = draggedItem.textContent;
+                    droppedEl.dataset.charge = draggedItem.dataset.charge;
+                    // Store reference to the original draggable element
+                    const originalDraggable = draggedItem;
+                    droppedEl.onclick = function() {
+                        originalDraggable.classList.remove('placed');
+                        this.remove();
+                    };
+                    this.appendChild(droppedEl);
+                    draggedItem.classList.add('placed');
+                }
+            });
+        });
+
+        function resetDragDrop() {
+            document.querySelectorAll('.dropped-item').forEach(el => el.remove());
+            document.querySelectorAll('.draggable').forEach(d => d.classList.remove('placed'));
+            document.querySelectorAll('.drop-zone').forEach(z => {
+                z.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        function checkDragDrop() {
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const dropped = zone.querySelector('.dropped-item');
+                const answer = zone.dataset.answer;
+                
+                zone.classList.remove('correct', 'incorrect');
+                
+                if (dropped) {
+                    if (dropped.dataset.charge === answer) {
+                        zone.classList.add('correct');
+                    } else {
+                        zone.classList.add('incorrect');
+                    }
+                }
+            });
+        }
+
+        // Formula Builder
+        function updateFormula(num) {
+            const cation = document.getElementById('cation' + num).value;
+            const anion = document.getElementById('anion' + num).value;
+            const cationNum = document.getElementById('cationNum' + num).value;
+            const anionNum = document.getElementById('anionNum' + num).value;
+            const display = document.getElementById('display' + num);
+            
+            if (!cation || !anion) {
+                display.textContent = 'Select ions above';
+                return;
+            }
+            
+            const cationSymbol = cation.split('+')[0].split('-')[0];
+            const anionSymbol = anion.split('+')[0].split('-')[0];
+            
+            let formula = '';
+            
+            // Handle polyatomic ions with brackets
+            const polyatomicAnions = ['SO4', 'NO3', 'CO3', 'PO4', 'OH'];
+            const isPolyatomic = polyatomicAnions.some(p => anionSymbol.includes(p));
+            
+            if (cationNum == 1) {
+                formula += cationSymbol;
+            } else {
+                formula += cationSymbol + '₀₁₂₃₄₅₆₇₈₉'[cationNum];
+            }
+            
+            if (isPolyatomic && anionNum > 1) {
+                formula += '(' + anionSymbol + ')' + '₀₁₂₃₄₅₆₇₈₉'[anionNum];
+            } else if (anionNum == 1) {
+                formula += anionSymbol;
+            } else {
+                formula += anionSymbol + '₀₁₂₃₄₅₆₇₈₉'[anionNum];
+            }
+            
+            // Convert numbers to subscripts
+            formula = formula.replace(/(\d)/g, (match) => '₀₁₂₃₄₅₆₇₈₉'[match]);
+            
+            display.innerHTML = formula;
+        }
+
+        // Add listeners to formula builders
+        for (let i = 1; i <= 3; i++) {
+            document.getElementById('cation' + i).addEventListener('change', () => updateFormula(i));
+            document.getElementById('anion' + i).addEventListener('change', () => updateFormula(i));
+            document.getElementById('cationNum' + i).addEventListener('input', () => updateFormula(i));
+            document.getElementById('anionNum' + i).addEventListener('input', () => updateFormula(i));
+        }
+
+        function checkFormula(num, correctAnswer) {
+            const display = document.getElementById('display' + num);
+            const feedback = document.getElementById('feedback' + num);
+            
+            // Normalize the display text for comparison
+            let userAnswer = display.textContent
+                .replace(/₀/g, '0').replace(/₁/g, '1').replace(/₂/g, '2')
+                .replace(/₃/g, '3').replace(/₄/g, '4').replace(/₅/g, '5')
+                .replace(/₆/g, '6').replace(/₇/g, '7').replace(/₈/g, '8')
+                .replace(/₉/g, '9');
+            
+            feedback.classList.add('show');
+            
+            if (userAnswer.toLowerCase().replace(/\s/g, '') === correctAnswer.toLowerCase()) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct! Well done!';
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '✗ Not quite. The correct formula is ' + correctAnswer;
+            }
+        }
+
+        // Naming Practice
+        function checkNaming(inputId, correctAnswers) {
+            const input = document.getElementById(inputId);
+            const feedback = document.getElementById('feedback-' + inputId);
+            const userAnswer = input.value.toLowerCase().trim();
+            
+            feedback.classList.add('show');
+            
+            if (correctAnswers.includes(userAnswer)) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✓ Correct!';
+            } else {
+                input.classList.remove('correct');
+                input.classList.add('incorrect');
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '✗ Not quite. Correct answer: ' + correctAnswers[0];
+            }
+        }
+
+        // Quiz
+        const quizAnswers = {
+            quiz1: ['-2', '2-', '-2', '−2'],
+            quiz2: ['iron(iii) chloride', 'iron (iii) chloride', 'iron(3) chloride'],
+            quiz3: ['mg(oh)2', 'mg(oh)₂'],
+            quiz4: ['potassium sulfate', 'potassium sulphate'],
+            quiz5: ['cu(no3)2', 'cu(no₃)₂'],
+            quiz6: ['+3', '3+', '+3'],
+            quiz7: ['lead(iv) oxide', 'lead (iv) oxide', 'lead(4) oxide'],
+            quiz8: ['na3po4', 'na₃po₄'],
+            quiz9: ['ammonium chloride'],
+            quiz10: ['baso4', 'baso₄']
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            
+            Object.keys(quizAnswers).forEach(id => {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.toLowerCase().trim()
+                    .replace(/₀/g, '0').replace(/₁/g, '1').replace(/₂/g, '2')
+                    .replace(/₃/g, '3').replace(/₄/g, '4').replace(/₅/g, '5')
+                    .replace(/₆/g, '6').replace(/₇/g, '7').replace(/₈/g, '8')
+                    .replace(/₉/g, '9');
+                
+                const isCorrect = quizAnswers[id].some(ans => 
+                    userAnswer === ans.toLowerCase()
+                );
+                
+                if (isCorrect) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    score++;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                }
+            });
+
+            const percentage = (score / 10) * 100;
+            document.querySelector('.score-circle').style.setProperty('--score-percent', percentage + '%');
+            document.getElementById('scoreText').textContent = score + '/10';
+            
+            const messageEl = document.getElementById('scoreMessage');
+            if (score >= 9) {
+                messageEl.textContent = '🎉 Excellent! You\'ve mastered ionic naming!';
+                messageEl.style.color = 'var(--accent-green)';
+            } else if (score >= 7) {
+                messageEl.textContent = '👍 Good job! A bit more practice and you\'ll have it!';
+                messageEl.style.color = 'var(--accent-cyan)';
+            } else if (score >= 5) {
+                messageEl.textContent = '📚 Getting there! Review the material and try again.';
+                messageEl.style.color = 'var(--accent-orange)';
+            } else {
+                messageEl.textContent = '💪 Keep practicing! Go back and review each section.';
+                messageEl.style.color = 'var(--accent-pink)';
+            }
+
+            document.getElementById('quizQuestions').style.display = 'none';
+            document.getElementById('quizResults').style.display = 'block';
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('.quiz-answer').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            document.getElementById('quizQuestions').style.display = 'block';
+            document.getElementById('quizResults').style.display = 'none';
+        }
+
+        // Click on step indicators to navigate
+        document.querySelectorAll('.step-indicator').forEach(step => {
+            step.addEventListener('click', function() {
+                goToSection(parseInt(this.dataset.step));
+            });
+        });
+    </script>
+</body>
+</html>
